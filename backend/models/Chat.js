@@ -22,4 +22,4 @@ const chatSchema = new Schema({
 
 let Chat=model("Chat",chatSchema)
 
-export default chatSchema;
+export default Chat;

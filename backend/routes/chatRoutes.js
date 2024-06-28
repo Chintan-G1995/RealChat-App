@@ -1,7 +1,8 @@
 import {Router} from "express"
-
+import { accessChat } from "../controllers/chatControllers.js";
+import auth from "../middleware/auth.js";
 let chatRouter=Router()
 
-chatRouter.post("/",(req,res)=>{
-    res.send("Hola")
-})
+chatRouter.post("/",auth,accessChat)
+
+export default chatRouter;

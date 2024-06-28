@@ -5,44 +5,44 @@ import Chat from "../models/Chat.js";
 //Path          POST/api/v1/chat
 //access        Private
 
-export const accessChat=asyncHandler(async(req,res)=>{
-    const {userId}=req.body;
+export const accessChat = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
 
-    if(!userId){
-        console.log("UserId param not sent with request");
-        return res.status(400);
-    }
+  if (!userId) {
+    console.log("UserId param not sent with request");
+    return res.status(400);
+  }
 
-    var isChat=await Chat.find({
-        isGroupChat:false,
-        users:{$all:[req.user._id,userId]}
-    }).populate("users","-password").populate("latestMessage")
+  let isChat=await Chat.find({
+    isGroupChat:false,
+    $and:[{users:{$elemMatch:{$eq:userId}}},{users:{$elemMatch:{$eq:req.userId}}}]
+}).populate("users","-password","-confirmPassword").populate("latestMessage")
 
-    isChat=await User.populate(isChat,{
-        path:"latestMessage.sender",
-        select:"name pic email"
-    })
-
-    if(isChat.length>0){
-        res.send(isChat[0])
-    }else{
-        var chatData={
-            chatName:"sender",
-            isGroupChat:false,
-            users:[req.user._id,userId]
-        }
-
-        try{
-            const createdChat=await Chat.create(chatData)
-
-            const FullChat=await Chat.findOne({_id:createdChat._id}).populate(
-                "users",
-                "-password"
-            )
-            res.status(200).send(FullChat)
-        }catch(error){
-            console.error(error);
-            res.status(400).json({error:error.message})
-        }
-    }
+isChat=await Chat.populate(isChat,{
+    path:"latestMessage.sender",
+    select:"name email photo"
 })
+
+  if (isChat.length > 0) {
+    res.send(isChat[0]);
+  } else {
+    var chatData = {
+      chatName: "Sender",
+      isGroupChat: false,
+      users: [req.userId, userId],
+    };
+
+    try {
+      let newChat = await Chat.create(chatData);
+
+      newChat = await Chat.findById(newChat._id)
+        .populate("users", "name email photo")
+        .populate("latestMessage");
+
+      res.status(200).send(newChat);
+    } catch (error) {
+      console.error(error);
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
