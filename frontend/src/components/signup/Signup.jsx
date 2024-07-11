@@ -47,7 +47,7 @@ const Signup = () => {
 
 //Axios server code
     let {data} = await axios.post(
-      "http://localhost:5000/api/v1/user/register",
+      "http://localhost:4000/api/v1/user/signup",
       formData,
       {
         headers: {
@@ -56,18 +56,18 @@ const Signup = () => {
       }
     );
     localStorage.setItem("token",data.token)
-    navigate("/chats",{replace:true})
+    navigate("/chat",{replace:true})
   
 
      //File type check  
-    // if (file && !["image/jpeg", "image/png"].includes(file.type)) {
-    //   setError("File type must be JPEG or PNG");
-    //   return;
-    // }
+    if (file && !["image/jpeg", "image/png"].includes(file.type)) {
+      setError("File type must be JPEG or PNG");
+      return;
+    }
     
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`${key} :: ${value}`);
-    // }
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key} :: ${value}`);
+    }
     toast.success("Signup Successfully");
     clear();
     navigate = `/login?${queryParams}`;
@@ -144,7 +144,7 @@ const Signup = () => {
           type="file"
           id="profile-photo"
           name="profile-photo"
-          value={file}
+          //value={file}
           onChange={(e) => setFile(e.target.files[0])}
         />
         {error && <p style={{ color: 'red' }}>{error}</p>}

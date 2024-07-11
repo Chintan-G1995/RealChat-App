@@ -13,6 +13,7 @@ const Chat = () => {
     { id: 1, sender: "Ushank", content: "Hi there!" },
     { id: 2, sender: "Jay", content: "Hello!" },
   ]);
+  // console.log("LOading");
 
   const [currentChat, setCurrentChat] = useState(chats[0]);
 
@@ -26,19 +27,20 @@ const Chat = () => {
     };
     setMessages([...messages, newMessage]);
     messageInput.value = "";
+    console.log("Loading 2");
   };
-  // const validation = () => {
-  //   const sendbutton = document.getElementsByClassName("send")[0];
-  //   const sendInput = document.getElementsByClassName("send-input");
+  const validation = () => {
+    const sendbutton = document.getElementsByClassName("send")[0];
+    const sendInput = document.getElementsByClassName("send-input");
 
-  //   if (sendInput.length === 0) {
-  //     //send button visibility false
-  //     sendbutton.style.visibility = "hidden";
-  //   }else{
-  //     sendbutton.style.visibility = "visible";
-  //   }
+    if (sendInput.length === 0) {
+      //send button visibility false
+      sendbutton.style.visibility = "hidden";
+    }else{
+      sendbutton.style.visibility = "visible";
+    }
     
-  // };
+  };
 
   // validation();
   return (

@@ -19,7 +19,7 @@ const Login = () => {
     formData.append("password",password)
     
     let {data} = await axios.post(
-      "http://localhost:5000/api/v1/user/login",
+      "http://localhost:4000/api/v1/user/login",
       formData,
       {
         headers: {
@@ -27,8 +27,8 @@ const Login = () => {
         },
       }
     );
-    localStorage.setItem("token",data.token)
-    navigate("/chats",{replace:true})
+    localStorage.setItem("user",JSON.stringify(data))
+    navigate("/chatbox",{replace:true})
   }
   return (
     <div className="main-container">

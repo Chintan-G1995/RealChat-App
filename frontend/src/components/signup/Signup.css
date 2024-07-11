@@ -75,12 +75,15 @@ button {
   transition: background-color 0.3s;
 }
 
-button[type="reset"] {
-  background-color: #dc3545;
+button[type="Submit"] {
+  background-color: #218838;
+}
+button[type="button"] {
+  background-color: #128c7e;
 }
 
-button:hover {
-  background-color: #218838;
+button[type="reset"] {
+  background-color: #dc3545;
 }
 
 button[type="reset"]:hover {
