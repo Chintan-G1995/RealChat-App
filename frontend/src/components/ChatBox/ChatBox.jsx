@@ -1,8 +1,10 @@
 import React from "react";
 import { Chatusers } from "./ChatUsers.jsx";
-import Chat  from "../ChatPage/Chat.jsx";
+import Chat from "../ChatPage/Chat.jsx";
 import Chatnav from "./ChatNav.jsx";
 import { ChatState } from "../../context/ChatContext.jsx";
+import { Box } from "@chakra-ui/react";
+import { ChatWindows } from "../../components/ChatBox/ChatWindows.jsx";
 
 export const ChatBox = () => {
   let { user } = ChatState();
@@ -10,8 +12,11 @@ export const ChatBox = () => {
   return (
     <div>
       {user && <Chatnav user={user} />}
-      <Chatusers />
-      <Chat />
+      <Box display={"flex"}>
+        {user && <Chatusers />}
+        {user && <ChatWindows />}
+
+      </Box>
     </div>
   );
 };

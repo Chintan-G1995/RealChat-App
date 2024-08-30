@@ -4,9 +4,10 @@ import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react"
+import { ChatState } from "../../context/ChatContext";
 
 const Login = () => {
-
+const {user,setUser}=ChatState()
   const navigate=useNavigate()
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
@@ -27,6 +28,7 @@ const Login = () => {
         },
       }
     );
+    setUser(data)
     localStorage.setItem("user",JSON.stringify(data))
     navigate("/chatbox",{replace:true})
   }
@@ -37,7 +39,6 @@ const Login = () => {
         <form action="" onSubmit={handleSubmit}>
           <label htmlFor="email">Email or Phone</label>
           <input type="email" onChange={(e)=>setEmail(e.target.value)} value={email} />
-
           <label htmlFor="password">Password</label>
           <input type="password" onChange={(e)=>setPassword(e.target.value)} value={password} />
           <div className="btn">
